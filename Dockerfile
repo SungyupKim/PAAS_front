@@ -12,5 +12,6 @@ COPY package.json /app/package.json
 RUN npm install
 RUN npm install react-scripts@3.0.1 -g
 
+COPY . .
 # 앱 실행
 CMD ["npm", "start"]
