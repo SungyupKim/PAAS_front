@@ -7,8 +7,8 @@ class App extends Component {
     contacts: []
   }
   componentDidMount() {
-    fetch('kubectl-restapi.dev.svc.cluster.local')
-    //fetch('http://192.168.219.3/cluster/aaa/namespace/dev')
+    //fetch('kubectl-restapi.dev.svc.cluster.local')
+    fetch('http://192.168.219.3/cluster/aaa/namespace/dev')
     .then(res => res.json())
     .then((data) => {
       console.log(data)
