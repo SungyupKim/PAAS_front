@@ -14,4 +14,5 @@ RUN npm install react-scripts@3.0.1 -g
 
 COPY . .
 # 앱 실행
+EXPOSE 3000
 CMD ["npm", "start"]
