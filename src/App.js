@@ -8,7 +8,7 @@ class App extends Component {
   }
   componentDidMount() {
     //fetch('kubectl-restapi.dev.svc.cluster.local')
-    fetch('http://192.168.219.3/cluster/aaa/namespace/dev')
+    fetch('http://192.168.219.3/cluster/aaa/namespace/dev/service')
     .then(res => res.json())
     .then((data) => {
       console.log(data)
