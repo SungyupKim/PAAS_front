@@ -1,26 +1,24 @@
-import { findByTestId } from '@testing-library/react';
-import React, {Component} from 'react';
-import Contacts from './components/contacts';
+import React, { Component } from 'react';
 
-class App extends Component {
-  state = {
-    contacts: []
-  }
-  componentDidMount() {
-    //fetch('kubectl-restapi.dev.svc.cluster.local')
-    fetch('http://192.168.219.3/cluster/aaa/namespace/dev/service')
-    .then(res => res.json())
-    .then((data) => {
-      console.log(data)
-      this.setState({ contacts: data.pods})
-    })
-    .catch(console.log)
-  }
-  render () {
+import Pods from './components/pod';
+import keycloak from './keycloak'
+import { ReactKeycloakProvider } from '@react-keycloak/web'
+import { useKeycloak } from '@react-keycloak/web'
+import Nav from "./components/Nav";
+
+
+
+const App = () => {
+
     return (
-      <Contacts contacts={this.state.contacts} />
+      <div>
+      <ReactKeycloakProvider authClient={keycloak}>
+        <Nav />
+        <Pods />
+        <hr />        
+      </ReactKeycloakProvider>
+      </div>
     );
-  }
 }
 
 export default App;

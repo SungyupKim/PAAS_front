@@ -1,0 +1,1 @@
+const podUrl = 'http://192.168.219.3/cluster/abcde/namespace/dev/service'
