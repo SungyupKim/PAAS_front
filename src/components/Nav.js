@@ -1,59 +1,51 @@
 import React from "react";
 import { useKeycloak } from "@react-keycloak/web";
+import "../App.css"
 
 const Nav = () => {
- const { keycloak, initialized } = useKeycloak();
+    const { keycloak, initialized } = useKeycloak();
 
- return (
-   <div>
-     <div className="top-0 w-full flex flex-wrap">
-       <section className="x-auto">
-         <nav className="flex justify-between bg-gray-200 text-blue-800 w-screen">
-           <div className="px-5 xl:px-12 py-6 flex w-full items-center">
-             <h1 className="text-3xl font-bold font-heading">
-               Keycloak React AUTH.
-             </h1>
-             <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-               <li>
-                 <a className="hover:text-blue-800" href="/">
-                   Home
-                 </a>
-               </li>
-               <li>
-                 <a className="hover:text-blue-800" href="/secured">
-                   Secured Page
-                 </a>
-               </li>
-             </ul>
-             <div className="hidden xl:flex items-center space-x-5">
-               <div className="hover:text-gray-200">
-                 {!keycloak.authenticated && (
-                   <button
-                     type="button"
-                     className="text-blue-800"
-                     onClick={() => keycloak.login()}
-                   >
-                     Login
-                   </button>
-                 )}
+    return (
+        <div>
+            <div>
+                <section>
+                    <nav>
+                        <div id="block_container">
+                            <h1 className="title">
+                                PAAS APPLICATION
+                            </h1>
+                            <div class="push">
+                                <div>
+                                    {!keycloak.authenticated && (
+                                        <button
+                                            type="button"
+                                            className="text-blue-800"
+                                            onClick={() => keycloak.login()}
+                                        >
+                                            Login
+                                        </button>
+                                    )}
 
-                 {!!keycloak.authenticated && (
-                   <button
-                     type="button"
-                     className="text-blue-800"
-                     onClick={() => keycloak.logout()}
-                   >
-                     Logout ({keycloak.tokenParsed.preferred_username})
-                   </button>
-                 )}
-               </div>
-             </div>
-           </div>
-         </nav>
-       </section>
-     </div>
-   </div>
- );
+                                    {!!keycloak.authenticated && (
+                                        <div>
+                                        <button
+                                            type="button"
+                                            className="text-blue-800"
+                                            onClick={() => keycloak.logout()}
+                                        >
+                                            Logout
+                                        </button>
+                                        <h1 style={{fontSize: '20px'}} className="welcome">hello!! {keycloak.tokenParsed.preferred_username}</h1>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    );
 };
 
 export default Nav;
