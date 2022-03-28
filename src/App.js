@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
-import Pods from './components/pod';
-import Services from './components/Service'
-import Namespaces from './components/Namespace'
+import Projects from './components/Project'
 import keycloak from './keycloak'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import Nav from "./components/Nav";
@@ -15,7 +12,7 @@ const App = () => {
       <ReactKeycloakProvider authClient={keycloak}>
         <Nav />
         <hr />       
-        <Namespaces/>
+        <Projects/>
       </ReactKeycloakProvider>
       </div>
     );

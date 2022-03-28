@@ -3,9 +3,10 @@ import axios from 'axios';
 import { useKeycloak } from "@react-keycloak/web";
 import resourcesReducer from "./State.js"
 import '../App.css'
-const serviceUrl = 'http://192.168.219.3/cluster/abcd/namespace/dev/service'
 
-const Services = () => {
+const Services = ({clusterId, namespace}) => {
+    const serviceUrl = 'http://localhost:1234/cluster/' + clusterId + '/namespace/' + namespace + '/service'
+
     const { keycloak, initialized } = useKeycloak();
 
     const [services, dispatchServices] = React.useReducer(
@@ -53,7 +54,7 @@ const List = React.memo(({ list }) =>
 );
 
 const Service = ({ service }) => (
-    <div style={{width:'100%'}}>
+    <div class = "Service" style={{width:'100%'}}>
         <span style={{width:'30%'}}>{service.name} </span>
         <span style={{width:'20%'}}>{service.labelSelector} </span>
         <span style={{width:'20%'}}>{service.age} </span>

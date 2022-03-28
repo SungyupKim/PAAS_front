@@ -2,9 +2,11 @@ import React from 'react'
 import axios from 'axios';
 import { useKeycloak } from "@react-keycloak/web";
 import resourcesReducer from "./State.js"
-const podUrl = 'http://192.168.219.3/cluster/abcd/namespace/dev/pod'
 
-const Pods = () => {
+
+const Pods = (namespace) => {
+  const podUrl = 'http://192.168.219.3/cluster/abcd/namespace/' + {namespace} + '/pod'
+
   const { keycloak, initialized } = useKeycloak();
 
   const [pods, dispatchPods] = React.useReducer(

@@ -4,9 +4,11 @@ import { useKeycloak } from "@react-keycloak/web";
 import resourcesReducer from "./State.js"
 import '../App.css'
 import Services from './Service'
-const namespaceUrl = 'http://192.168.219.3/cluster/abcd/namespace'
 
-const Namespaces = () => {
+
+const Namespaces = ({clusterId}) => {
+    const namespaceUrl = 'http://localhost:1234/cluster/' +clusterId + '/namespace'
+
     const { keycloak, initialized } = useKeycloak();
 
     const [namespaces, dispatchNamespaces] = React.useReducer(
@@ -37,26 +39,28 @@ const Namespaces = () => {
             {
                 namespaces.isLoading ? (<p>Loading ... </p>
                 ) : (
-                    <List list={namespaces.data} />
+                    <List list={namespaces.data} clusterId={clusterId}/>
                 )
             }
         </div>
     );
 }
 
-const List = React.memo(({ list }) =>
+const List = React.memo(({ list, clusterId}) =>
     list.map(namespace => (
         <Namespace
             key={namespace.objectID}
             namespace={namespace}
+            clusterId={clusterId}
         />
     ))
 );
 
 class Namespace extends Component{
-    constructor({namespace}){
+    constructor({namespace, clusterId}){
         super()
         this.namespace = namespace
+        this.clusterId = clusterId
         this.state={
           isClicked: false, 
         }
@@ -77,26 +81,9 @@ class Namespace extends Component{
                 get services 
             </button>
         </span>
-        {this.state.isClicked ? <Services/> : null}
+        {this.state.isClicked ? <Services clusterId={this.clusterId} namespace={this.namespace}/> : null}
     </div>
     }
 }
 
-/*
-{
-const Namespace = ({ namespace }) => {
-    var isClicked = false;
-
-    return <div class="namespace" style={{width:'100%'}}>
-        <span style={{width:'50%'}}>{namespace}</span>
-        <span style={{width:'10%'}}>
-            <button type="button" onClick={() => isClicked = true}>
-                get services 
-            </button>
-        </span>
-        {isClicked ? <Services/> : console.log("what?")}
-    </div>
-};
-}
-*/
 export default Namespaces;
