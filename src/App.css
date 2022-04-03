@@ -48,8 +48,8 @@
 
 .service {
     display: flex;
-    align-items: stretch;
-    padding-left: 500px;
+    align-items: center;
+    padding-bottom: 5px;
 }
 
 .service>span {
@@ -75,7 +75,6 @@
 .namespace {
     display: flex;
     align-items: stretch;
-    padding-left: 50px;
 }
 
 .project {
@@ -87,6 +86,11 @@
 .cluster {
     display: flex;
     align-items: stretch;
-    padding-left: 200px;
-    max-width: 80%;
+    max-width: 50%;
+}
+
+.ProjectResources {
+    display: flex;
+    align-items: stretch;
+    max-width: 50%;
 }

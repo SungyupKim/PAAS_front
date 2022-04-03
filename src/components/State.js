@@ -24,4 +24,24 @@ const resourcesReducer = (state, action) => {
     }
 };
 
+const clickReducer = (state, action) => {
+    switch (action.type) {
+        case 'RESOURCES_FETCH_INIT':
+            return {
+                ...state,
+                isInit: true,
+                isClicked: false,
+            };
+        case 'RESOURCES_CLICKED':
+            return {
+                ...state,
+                isInit: false,
+                isClicked: true,
+            };
+        default:
+            throw new Error();
+    }
+};
+
+export { clickReducer };
 export default resourcesReducer;

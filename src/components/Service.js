@@ -54,7 +54,7 @@ const List = React.memo(({ list }) =>
 );
 
 const Service = ({ service }) => (
-    <div class = "Service" style={{width:'100%'}}>
+    <div class = "service" style={{width:'100%'}}>
         <span style={{width:'30%'}}>{service.name} </span>
         <span style={{width:'20%'}}>{service.labelSelector} </span>
         <span style={{width:'20%'}}>{service.age} </span>
