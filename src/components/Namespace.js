@@ -43,7 +43,7 @@ const Namespaces = ({ clusterId }) => {
             {
                 namespaces.isLoading ? (<p>Loading ... </p>
                 ) : (
-                    <List list={namespaces.data} clusterId={clusterId} states={namespacesResource} dispatcher={dispatchClickResources} isClicked={namespacesResource.isClicked}/>
+                    <List list={namespaces.data} clusterId={clusterId} dispatcher={dispatchClickResources} isClicked={namespacesResource.isClicked}/>
                 )
             }
         </div>
@@ -99,4 +99,5 @@ class Namespace extends Component {
     }
 }
 
+export {Namespace}
 export default Namespaces;
