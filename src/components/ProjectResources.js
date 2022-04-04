@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { useKeycloak } from "@react-keycloak/web";
-import resourcesReducer from "./State.js"
+import resourcesReducer, {clickReducer} from "./State.js"
 import '../App.css'
 import Namespaces from "./Namespace"
 const ProjectResources = ({ projectId }) => {
@@ -33,32 +33,38 @@ const ProjectResources = ({ projectId }) => {
         handleFetchProjectResources();
     }, [initialized]);
 
+
+    const [projectResource, dispatchClickResources] = React.useReducer(
+        clickReducer, { isInit: true, isClicked: false }
+    );
+
     return (
         <div>
             {
                 projectResources.isLoading ? (<p>Loading ... </p>
                 ) : (
-                    <ClusterList list={projectResources.data} />
+                    <ClusterList list={projectResources.data} clicked={projectResource.isClicked} dispatcher={dispatchClickResources}/>
                 )
             }
         </div>
     );
 }
 
-const ClusterList = React.memo(({ list }) =>
+const ClusterList = React.memo(({ list, clicked, dispatcher }) =>
     Object.keys(list).map((keyItem) => {
         if (keyItem == 'clusters') {
             return list[keyItem].map((clusterItem) => (
-                <ClusterResource cluster={clusterItem} />
+                <ClusterResource cluster={clusterItem} isSomethingClicked={clicked} dispatcher={dispatcher}/>
             ));
         }
     })
 );
 
 class ClusterResource extends Component {
-    constructor({ cluster }) {
+    constructor({ cluster, dispatcher}) {
         super()
         this.cluster = cluster;
+        this.onClick = dispatcher;
         this.state = {
             isClicked: false,
         }
@@ -66,6 +72,7 @@ class ClusterResource extends Component {
     }
 
     _onButtonClick() {
+        this.onClick({ type: 'RESOURCES_CLICKED' });
         this.setState({
             isClicked: true,
         });

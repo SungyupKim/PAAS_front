@@ -75,7 +75,6 @@ class Namespace extends Component {
         this.state = {
             isClicked: false,
         }
-        console.log(this.isSomethingClicked)
         this._onButtonClick = this._onButtonClick.bind(this);
     }
 

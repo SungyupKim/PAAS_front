@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 import axios from 'axios';
 import { useKeycloak } from "@react-keycloak/web";
-import resourcesReducer from "./State.js"
+import resourcesReducer, {clickReducer} from "./State.js"
 
 
-const Pods = (namespace) => {
-  const podUrl = 'http://192.168.219.3/cluster/abcd/namespace/' + {namespace} + '/pod'
+const Pods = ({cluster, namespace}) => {
+  const podUrl = 'http://localhost:1234/cluster/' + cluster +'/namespace/' + namespace + '/pod'
 
   const { keycloak, initialized } = useKeycloak();
 
@@ -32,35 +32,61 @@ const Pods = (namespace) => {
     handleFetchPods();
   }, [initialized]);
 
+  const [podResource, dispatchClickResources] = React.useReducer(
+    clickReducer, { isInit: true, isClicked: false }
+  );
+
   return (
     <div>
     {
       pods.isLoading ? (<p>Loading ... </p>
       ) : (
-          <List list={pods.data} />
+          <List list={pods.data} dispatcher={dispatchClickResources} clicked={podResource.isClicked}/>
       )
     }
     </div>
   );
   }
 
-  const List = React.memo(({ list }) =>
+  const List = React.memo(({ list, dispatcher, clicked}) =>
     list.map(pod => (
       <Pod
         key={pod.objectID}
         pod={pod}
+        clickCallback={dispatcher}
+        isSomethingClicked={clicked}
       />
     ))
   );
 
-  const Pod = ({ pod }) => (
-    <div>
-      <span>{pod.name} </span>
-      <span>{pod.status} </span>
-      <span>{pod.age} </span>
-      <span>{pod.readyPods} </span>
-      <span>{pod.totalPods} </span>
-    </div>
-  );
+  class Pod extends Component {
+    constructor({ pod, clickCallback}) {
+        super()
+        this.pod = pod
+        this.onClick = clickCallback
+        this.state = {
+            isClicked: false,
+        }
+        this._onButtonClick = this._onButtonClick.bind(this);
+    }
+
+    _onButtonClick() {
+        this.onClick({ type: 'RESOURCES_CLICKED' });
+        console.log('click!!!')
+        this.setState({
+            isClicked: true,
+        });
+    }
+
+    render() {
+        return this.state.isClicked ? null : this.props.isSomethingClicked ? null :  <div class='pod' style={{ width: '100%' }} >
+        <span style={{ width: '50%' }}>{this.pod.name} </span>
+        <span style={{ width: '10%' }}>{this.pod.status} </span>
+        <span style={{ width: '10%' }}>{this.pod.age} </span>
+        <span style={{ width: '10%' }}>{this.pod.readyPods} </span>
+        <span style={{ width: '10%' }}>{this.pod.totalPods} </span>
+      </div>
+    }
+}
 
   export default Pods;

@@ -94,3 +94,9 @@
     align-items: stretch;
     max-width: 50%;
 }
+
+.pod {
+    display: flex;
+    align-items: stretch;
+    max-width: 50%;
+}
